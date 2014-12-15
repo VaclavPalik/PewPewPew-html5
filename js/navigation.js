@@ -12,7 +12,7 @@
 				/(?:^|\s)invisible(?!\S)/g, '');
 	};
 	var hideElement = function(element) {
-		document.getElementById(element).className += "invisible";
+		document.getElementById(element).className += " invisible";
 	};
 	
 	var showGame = function() {
