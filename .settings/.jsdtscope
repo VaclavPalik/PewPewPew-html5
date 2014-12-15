@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry excluding="dist/js/|grunt/|js/" kind="src" path="bower_components/bootstrap"/>
+	<classpathentry kind="src" path="bower_components/bootstrap/dist/js"/>
+	<classpathentry kind="src" path="bower_components/bootstrap/grunt"/>
+	<classpathentry kind="src" path="bower_components/bootstrap/js"/>
+	<classpathentry kind="src" path="bower_components/jquery/dist"/>
+	<classpathentry excluding="sizzle/dist/|ajax/var/|exports/|var/|core/var/|core/|manipulation/|traversing/|data/var/|ajax/|queue/|event/|manipulation/var/|attributes/|traversing/var/|css/|data/|css/var/|effects/" kind="src" path="bower_components/jquery/src"/>
+	<classpathentry excluding="var/" kind="src" path="bower_components/jquery/src/ajax"/>
+	<classpathentry kind="src" path="bower_components/jquery/src/ajax/var"/>
+	<classpathentry kind="src" path="bower_components/jquery/src/attributes"/>
+	<classpathentry excluding="var/" kind="src" path="bower_components/jquery/src/core"/>
+	<classpathentry kind="src" path="bower_components/jquery/src/core/var"/>
+	<classpathentry excluding="var/" kind="src" path="bower_components/jquery/src/css"/>
+	<classpathentry kind="src" path="bower_components/jquery/src/css/var"/>
+	<classpathentry excluding="var/" kind="src" path="bower_components/jquery/src/data"/>
+	<classpathentry kind="src" path="bower_components/jquery/src/data/var"/>
+	<classpathentry kind="src" path="bower_components/jquery/src/effects"/>
+	<classpathentry kind="src" path="bower_components/jquery/src/event"/>
+	<classpathentry kind="src" path="bower_components/jquery/src/exports"/>
+	<classpathentry excluding="var/" kind="src" path="bower_components/jquery/src/manipulation"/>
+	<classpathentry kind="src" path="bower_components/jquery/src/manipulation/var"/>
+	<classpathentry kind="src" path="bower_components/jquery/src/queue"/>
+	<classpathentry kind="src" path="bower_components/jquery/src/sizzle/dist"/>
+	<classpathentry excluding="var/" kind="src" path="bower_components/jquery/src/traversing"/>
+	<classpathentry kind="src" path="bower_components/jquery/src/traversing/var"/>
+	<classpathentry kind="src" path="bower_components/jquery/src/var"/>
+	<classpathentry kind="con" path="org.eclipse.wst.jsdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path=""/>
+</classpath>
