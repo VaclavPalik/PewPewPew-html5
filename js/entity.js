@@ -1,4 +1,6 @@
 /* jshint devel: true */
+var PewPew= {};
+
 !function() {
 	'use strict';
 
@@ -25,7 +27,7 @@
 	/**
 	 * player singleton
 	 */
-	player = {
+	PewPew.player = {
 		money : 0,
 		upgrades : {
 			damage : new Upgrade("damage", 10),
@@ -50,17 +52,17 @@
 	/**
 	 * Fill upgrades tab
 	 */
-	var html;
-	for ( var upgrade in player.upgades) {
-		if (player.upgrades.hasOwnProperty(upgrade)) {
-			html += upgrade.name + "<br>" + 'Level: <span id="'
+	var html="";
+	for ( var upgrade in PewPew.player.upgrades) {
+		if (PewPew.player.upgrades.hasOwnProperty(upgrade)) {
+			upgrade=PewPew.player.upgrades[upgrade];
+			html +='<div id="'+ upgrade.getElementId() + '" class="tile">' + upgrade.name + "<br>" + 'Level: <span id="'
 			+ upgrade.getElementId() + '-level">0</span><br>'
 			+ 'Cost: <span id="' + upgrade.getElementId() + '-cost">'
-			+ upgrade.cost() + "</span>" + "</div>" + '<div id="'
-			+ upgrade.getElementId() + '" class="tile">';
+			+ upgrade.cost() + "</span>" + "</div>";
 		}
 	}
-	document.getElementById("upgrade-tiles").innerhtml=html;
+	document.getElementById("upgrade-tiles").innerHTML=html;
 	
 
 	/**
@@ -91,16 +93,16 @@
 		 * called when an enemy is destroyed
 		 */
 		this.onDestroy = function() {
-			player.addMoney(this.value * player.income());
-			var index = game.enemies.indexOf(this);
+			PewPew.player.addMoney(this.value * PewPew.player.income());
+			var index = PewPew.game.enemies.indexOf(this);
 			if (index > -1) {
-				game.enemies.splice(index, 1);
+				PewPew.game.enemies.splice(index, 1);
 			}
 		};
-		game.enemies[game.enemies.length] = this;
+		PewPew.game.enemies[game.enemies.length] = this;
 	}
 
-	game = {
+	PewPew.game = {
 		level : 1,
 		enemies : []
 	};
