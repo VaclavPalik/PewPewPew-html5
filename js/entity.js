@@ -8,36 +8,37 @@ var PewPew= {};
 	 * Upgrade class
 	 */
 	function Upgrade(name, maxLevel) {
+		var self=this;
 		this.name = name;
 		this.maxLevel = maxLevel;
 		this.level = 0;
 		this.cost = function() {
-			return (this.level + 1) * 100;
+			return (self.level + 1) * 100;
 		};
 		this.getElementId = function() {
-			return "upgrade-" + this.name;
+			return "upgrade-" + self.name;
 		};
 		this.onBuy = function() {
-			document.getElementById(this.getElementId() + "-cost").innerHTML = this
+			document.getElementById(self.getElementId() + "-cost").innerHTML = self
 					.cost();
-			document.getElementById(this.getElementId() + "-level").innerHTML = this.level;
+			document.getElementById(self.getElementId() + "-level").innerHTML = self.level;
 		};
 		this.getHtml = function() {
-			return '<div id="'+ this.getElementId() + '" class="tile">' + this.name + "<br>" + 'Level: <span id="'
-			+ this.getElementId() + '-level">0</span><br>'
-			+ 'Cost: <span id="' + this.getElementId() + '-cost">'
-			+ this.cost() + "</span>" + "</div>";
+			return '<div id="'+ self.getElementId() + '" class="tile">' + self.name + "<br>" + 'Level: <span id="'
+			+ self.getElementId() + '-level">0</span><br>'
+			+ 'Cost: <span id="' + self.getElementId() + '-cost">'
+			+ self.cost() + "</span>" + "</div>";
 		}
 		this.tryBuy = function() {
-			if(this.level>=this.maxLevel){
+			if(self.level>=self.maxLevel){
 				return false;
 			}
-			if(PewPew.player.money<this.cost()){
+			if(PewPew.player.money<self.cost()){
 				return false;
 			}
-			PewPew.player.substractMoney(this.cost());
-			this.level++;
-			this.onBuy();
+			PewPew.player.substractMoney(self.cost());
+			self.level++;
+			self.onBuy();
 		}
 	}
 
@@ -78,10 +79,12 @@ var PewPew= {};
 	}
 	document.getElementById("upgrade-tiles").innerHTML=html;
 	//add the event listeners to the created buttons
+	var that, upg;
 	for ( var upgrade in PewPew.player.upgrades) {
 		if (PewPew.player.upgrades.hasOwnProperty(upgrade)) {
-			var upg=PewPew.player.upgrades[upgrade];
+			upg=PewPew.player.upgrades[upgrade];
 			document.getElementById(upg.getElementId()).addEventListener("click", upg.tryBuy);
+			
 		}
 	}
 	
