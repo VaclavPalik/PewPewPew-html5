@@ -93,14 +93,15 @@ var PewPew= {};
 	 * Enemy class
 	 */
 	function Enemy(hp, x, y, image, value) {
+		var self=this;
 		this.hp = hp;
 		this.x = x;
 		this.y = y;
 		this.setX = function(x) {
-			this.x = x;
+			self.x = x;
 		};
 		this.setY = function(y) {
-			this.y = y;
+			self.y = y;
 		};
 		this.image = image;
 		this.value = value;
@@ -108,17 +109,17 @@ var PewPew= {};
 		 * deals damage to the enemy
 		 */
 		this.recieveDamage = function(damage) {
-			this.hp -= damage;
-			if (this.hp <= 0) {
-				this.onDestroy();
+			self.hp -= damage;
+			if (self.hp <= 0) {
+				self.onDestroy();
 			}
 		};
 		/**
 		 * called when an enemy is destroyed
 		 */
 		this.onDestroy = function() {
-			PewPew.player.addMoney(this.value * PewPew.player.income());
-			var index = PewPew.game.enemies.indexOf(this);
+			PewPew.player.addMoney(self.value * PewPew.player.income());
+			var index = PewPew.game.enemies.indexOf(self);
 			if (index > -1) {
 				PewPew.game.enemies.splice(index, 1);
 			}
