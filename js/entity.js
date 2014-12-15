@@ -45,7 +45,7 @@ var PewPew= {};
 	 * player singleton
 	 */
 	PewPew.player = {
-		money : 0,
+		money : 50000,
 		upgrades : {
 			damage : new Upgrade("damage", 10),
 			income : new Upgrade("income", 10)
@@ -77,6 +77,13 @@ var PewPew= {};
 		}
 	}
 	document.getElementById("upgrade-tiles").innerHTML=html;
+	//add the event listeners to the created buttons
+	for ( var upgrade in PewPew.player.upgrades) {
+		if (PewPew.player.upgrades.hasOwnProperty(upgrade)) {
+			var upg=PewPew.player.upgrades[upgrade];
+			document.getElementById(upg.getElementId()).addEventListener("click", upg.tryBuy);
+		}
+	}
 	
 
 	/**
