@@ -42,9 +42,10 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#pewpew">Pew Pew</a></li>
-            <li><a href="#upgrades">Upgrade</a></li>
-            <li><a href="#about">About</a></li>
+            <li class="active" id="nav-game"><a href="#pewpew">Pew Pew</a></li>
+            <li id="nav-upgrade"><a href="#upgrades">Upgrade</a></li>
+            <li id="nav-about"><a href="#about">About</a></li>
+            <li><a>Money <span id="money">0</span></a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -52,10 +53,9 @@
 
     <div class="container">
 
-      <div class="starter-template">
-        <h1>Bootstrap starter template</h1>
-        <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>
-      </div>
+      <div id="game"><canvas id="canvas"></canvas>game</div>
+      <div id="upgrades" class="invisible">upgrades</div>
+      <div id="about" class="invisible">about</div>
 
     </div><!-- /.container -->
 
@@ -63,7 +63,7 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="bower_components/dist/jquery.min.js"></script>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="bower_components/bootstrap/assets/js/ie10-viewport-bug-workaround.js"></script>
