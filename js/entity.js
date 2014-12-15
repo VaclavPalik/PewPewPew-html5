@@ -12,8 +12,13 @@
 		this.cost = function() {
 			return (this.level + 1) * 100;
 		};
-		this.getElementId = function (){
-			return "upgrade-"+"name";
+		this.getElementId = function() {
+			return "upgrade-" + this.name;
+		};
+		this.onBuy = function() {
+			document.getElementById(this.getElementId() + "-cost").innerHTML = this
+					.cost();
+			document.getElementById(this.getElementId() + "-level").innerHTML = this.level;
 		};
 	}
 
@@ -32,16 +37,31 @@
 		damage : function() {
 			return this.upgrades.damage.level + 1;
 		},
-		changeMoney : function(newMoney){
-			this.money=newMoney;
+		changeMoney : function(newMoney) {
+			this.money = newMoney;
 		},
 		addMoney : function(money) {
-			return this.changeMoney(this.money+money);
+			return this.changeMoney(this.money + money);
 		},
-		substractMoney : function(money){
+		substractMoney : function(money) {
 			return this.addMoney(-money);
-		} 
+		}
 	};
+	/**
+	 * Fill upgrades tab
+	 */
+	var html;
+	for ( var upgrade in player.upgades) {
+		if (player.upgrades.hasOwnProperty(upgrade)) {
+			html += upgrade.name + "<br>" + 'Level: <span id="'
+			+ upgrade.getElementId() + '-level">0</span><br>'
+			+ 'Cost: <span id="' + upgrade.getElementId() + '-cost">'
+			+ upgrade.cost() + "</span>" + "</div>" + '<div id="'
+			+ upgrade.getElementId() + '" class="tile">';
+		}
+	}
+	document.getElementById("upgrade-tiles").innerhtml=html;
+	
 
 	/**
 	 * Enemy class
@@ -73,11 +93,11 @@
 		this.onDestroy = function() {
 			player.addMoney(this.value * player.income());
 			var index = game.enemies.indexOf(this);
-			if(index>-1){
+			if (index > -1) {
 				game.enemies.splice(index, 1);
 			}
 		};
-		game.enemies[game.enemies.length]=this;
+		game.enemies[game.enemies.length] = this;
 	}
 
 	game = {
