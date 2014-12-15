@@ -28,6 +28,17 @@ var PewPew= {};
 			+ 'Cost: <span id="' + this.getElementId() + '-cost">'
 			+ this.cost() + "</span>" + "</div>";
 		}
+		this.tryBuy = function() {
+			if(this.level>=this.maxLevel){
+				return false;
+			}
+			if(PewPew.player.money<this.cost()){
+				return false;
+			}
+			PewPew.player.substractMoney(this.cost());
+			this.level++;
+			this.onBuy();
+		}
 	}
 
 	/**
@@ -47,6 +58,7 @@ var PewPew= {};
 		},
 		changeMoney : function(newMoney) {
 			this.money = newMoney;
+			document.getElementById("money").innerHTML=this.money;
 		},
 		addMoney : function(money) {
 			return this.changeMoney(this.money + money);
