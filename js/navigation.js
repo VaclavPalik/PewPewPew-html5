@@ -14,25 +14,41 @@
 	var hideElement = function(element) {
 		document.getElementById(element).className += " invisible";
 	};
-	
+	var setActive = function(element) {
+		element.className += " active";
+	};
+	var setUnactive = function(element) {
+		element.className = element.className.replace(/(?:^|\s)active(?!\S)/g,
+				'');
+	};
+
 	var showGame = function() {
 		showElement("game");
 		hideElement("upgrades");
 		hideElement("about");
+		setActive(navGame);
+		setUnactive(navUpgrade);
+		setUnactive(navAbout);
 	};
-	
+
 	var showUpgrades = function() {
 		hideElement("game");
 		showElement("upgrades");
 		hideElement("about");
+		setUnactive(navGame);
+		setActive(navUpgrade);
+		setUnactive(navAbout);
 	};
-	
+
 	var showAbout = function() {
 		hideElement("game");
 		hideElement("upgrades");
 		showElement("about");
+		setUnactive(navGame);
+		setUnactive(navUpgrade);
+		setActive(navAbout);
 	};
-	
+
 	navGame.addEventListener("click", showGame);
 	navUpgrade.addEventListener("click", showUpgrades);
 	navAbout.addEventListener("click", showAbout);
