@@ -22,6 +22,12 @@ var PewPew= {};
 					.cost();
 			document.getElementById(this.getElementId() + "-level").innerHTML = this.level;
 		};
+		this.getHtml = function() {
+			return '<div id="'+ this.getElementId() + '" class="tile">' + this.name + "<br>" + 'Level: <span id="'
+			+ this.getElementId() + '-level">0</span><br>'
+			+ 'Cost: <span id="' + this.getElementId() + '-cost">'
+			+ this.cost() + "</span>" + "</div>";
+		}
 	}
 
 	/**
@@ -55,11 +61,7 @@ var PewPew= {};
 	var html="";
 	for ( var upgrade in PewPew.player.upgrades) {
 		if (PewPew.player.upgrades.hasOwnProperty(upgrade)) {
-			upgrade=PewPew.player.upgrades[upgrade];
-			html +='<div id="'+ upgrade.getElementId() + '" class="tile">' + upgrade.name + "<br>" + 'Level: <span id="'
-			+ upgrade.getElementId() + '-level">0</span><br>'
-			+ 'Cost: <span id="' + upgrade.getElementId() + '-cost">'
-			+ upgrade.cost() + "</span>" + "</div>";
+			html += PewPew.player.upgrades[upgrade].getHtml();
 		}
 	}
 	document.getElementById("upgrade-tiles").innerHTML=html;
