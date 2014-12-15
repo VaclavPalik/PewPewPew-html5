@@ -1,5 +1,5 @@
 /* jshint devel: true */
-var PewPew= {};
+var PewPew = {};
 
 !function() {
 	'use strict';
@@ -8,7 +8,7 @@ var PewPew= {};
 	 * Upgrade class
 	 */
 	function Upgrade(name, maxLevel) {
-		var self=this;
+		var self = this;
 		this.name = name;
 		this.maxLevel = maxLevel;
 		this.level = 0;
@@ -24,16 +24,17 @@ var PewPew= {};
 			document.getElementById(self.getElementId() + "-level").innerHTML = self.level;
 		};
 		this.getHtml = function() {
-			return '<div id="'+ self.getElementId() + '" class="tile">' + self.name + "<br>" + 'Level: <span id="'
-			+ self.getElementId() + '-level">0</span><br>'
-			+ 'Cost: <span id="' + self.getElementId() + '-cost">'
-			+ self.cost() + "</span>" + "</div>";
+			return '<div id="' + self.getElementId() + '" class="tile">'
+					+ self.name + "<br>" + 'Level: <span id="'
+					+ self.getElementId() + '-level">0</span><br>'
+					+ 'Cost: <span id="' + self.getElementId() + '-cost">'
+					+ self.cost() + "</span>" + "</div>";
 		}
 		this.tryBuy = function() {
-			if(self.level>=self.maxLevel){
+			if (self.level >= self.maxLevel) {
 				return false;
 			}
-			if(PewPew.player.money<self.cost()){
+			if (PewPew.player.money < self.cost()) {
 				return false;
 			}
 			PewPew.player.substractMoney(self.cost());
@@ -59,7 +60,7 @@ var PewPew= {};
 		},
 		changeMoney : function(newMoney) {
 			this.money = newMoney;
-			document.getElementById("money").innerHTML=this.money;
+			document.getElementById("money").innerHTML = this.money;
 		},
 		addMoney : function(money) {
 			return this.changeMoney(this.money + money);
@@ -71,29 +72,29 @@ var PewPew= {};
 	/**
 	 * Fill upgrades tab
 	 */
-	var html="";
+	var html = "";
 	for ( var upgrade in PewPew.player.upgrades) {
 		if (PewPew.player.upgrades.hasOwnProperty(upgrade)) {
 			html += PewPew.player.upgrades[upgrade].getHtml();
 		}
 	}
-	document.getElementById("upgrade-tiles").innerHTML=html;
-	//add the event listeners to the created buttons
+	document.getElementById("upgrade-tiles").innerHTML = html;
+	// add the event listeners to the created buttons
 	var that, upg;
 	for ( var upgrade in PewPew.player.upgrades) {
 		if (PewPew.player.upgrades.hasOwnProperty(upgrade)) {
-			upg=PewPew.player.upgrades[upgrade];
-			document.getElementById(upg.getElementId()).addEventListener("click", upg.tryBuy);
-			
+			upg = PewPew.player.upgrades[upgrade];
+			document.getElementById(upg.getElementId()).addEventListener(
+					"click", upg.tryBuy);
+
 		}
 	}
-	
 
 	/**
 	 * Enemy class
 	 */
 	function Enemy(hp, x, y, image, value) {
-		var self=this;
+		var self = this;
 		this.hp = hp;
 		this.x = x;
 		this.y = y;
