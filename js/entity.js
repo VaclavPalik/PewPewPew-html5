@@ -29,7 +29,7 @@ var PewPew = {};
 					+ self.getElementId() + '-level">0</span><br>'
 					+ 'Cost: <span id="' + self.getElementId() + '-cost">'
 					+ self.cost() + "</span>" + "</div>";
-		}
+		};
 		this.tryBuy = function() {
 			if (self.level >= self.maxLevel) {
 				return false;
@@ -40,7 +40,7 @@ var PewPew = {};
 			PewPew.player.substractMoney(self.cost());
 			self.level++;
 			self.onBuy();
-		}
+		};
 	}
 
 	/**
@@ -80,8 +80,8 @@ var PewPew = {};
 	}
 	document.getElementById("upgrade-tiles").innerHTML = html;
 	// add the event listeners to the created buttons
-	var that, upg;
-	for ( var upgrade in PewPew.player.upgrades) {
+	var upg;
+	for ( upgrade in PewPew.player.upgrades) {
 		if (PewPew.player.upgrades.hasOwnProperty(upgrade)) {
 			upg = PewPew.player.upgrades[upgrade];
 			document.getElementById(upg.getElementId()).addEventListener(
