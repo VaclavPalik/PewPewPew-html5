@@ -81,7 +81,7 @@ var PewPew = {};
 	document.getElementById("upgrade-tiles").innerHTML = html;
 	// add the event listeners to the created buttons
 	var upg;
-	for ( upgrade in PewPew.player.upgrades) {
+	for (upgrade in PewPew.player.upgrades) {
 		if (PewPew.player.upgrades.hasOwnProperty(upgrade)) {
 			upg = PewPew.player.upgrades[upgrade];
 			document.getElementById(upg.getElementId()).addEventListener(
@@ -130,6 +130,30 @@ var PewPew = {};
 
 	PewPew.game = {
 		level : 1,
-		enemies : []
+		enemies : [],
+		handleHit : function(evt) {
+			evt.preventDefault();
+			var touches = event.changedTouches;
+			var touchId, x, y;
+			for (var i = 0; i < event.changedTouches.length; i++) {
+				touchId = event.changedTouches[i].identifier;
+				x = event.changedTouches[i].pageX;
+				y = event.changedTouches[i].pageY;
+				for (var enemy in enemies) {
+					//test if the enemy is hit
+					if(x>=enemy.x && x<=enemy.x+enemy.image.width && y>=enemy.y&&y<=enemy.y+enemy.image.height){
+						enemy.receiveDamage(PewPew.player.damage());
+					}
+				}
+			}
+
+		}
 	};
+
+	PewPew.canvas = {
+		element : document.getElementById("canvas"),
+		context : PewPew.canvas.element.getContext("2d"),
+	};
+	PewPew.canvas.element.addEventListener("touch", PewPew.game.handleHit
+			.bind(PewPew.game));
 }();
