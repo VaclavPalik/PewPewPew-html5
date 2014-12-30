@@ -137,9 +137,15 @@ var PewPew = {};
 		this.canvasImage.onload = function() {
 			PewPew.canvas.context.drawImage(self.canvasImage, self.x, self.y);
 		};
-
+		this.width=this.canvasImage.width;
+		this.height=this.canvasImage.height;
 		PewPew.game.enemies[game.enemies.length] = this;
 	}
+	
+	function Fighter(x, y){
+		Enemy.call(this, 1, x, y, "img/fighter.png", 1);
+	}
+	Fighter.prototype = Object.create(Enemy.prototype);
 
 	PewPew.game = {
 		level : 1,
@@ -154,9 +160,9 @@ var PewPew = {};
 				y = event.changedTouches[i].pageY;
 				for ( var enemy in enemies) {
 					// test if the enemy is hit
-					if (x >= enemy.x && x <= enemy.x + enemy.image.width
+					if (x >= enemy.x && x <= enemy.x + enemy.width
 							&& y >= enemy.y
-							&& y <= enemy.y + enemy.image.height) {
+							&& y <= enemy.y + enemy.height) {
 						enemy.receiveDamage(PewPew.player.damage());
 					}
 				}
