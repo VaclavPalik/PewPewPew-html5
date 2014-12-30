@@ -124,7 +124,20 @@ var PewPew = {};
 			if (index > -1) {
 				PewPew.game.enemies.splice(index, 1);
 			}
+			// redraw the scene
+			PewPew.canvas.context.clearRect(0, 0, PewPew.canvas.width,
+					PewPew.canvas.height);
+			for ( var enemy in PewPew.game.enemies) {
+				PewPew.canvas.context.drawImage(enemy.canvasImage, enemy.x,
+						enemy.y);
+			}
 		};
+		this.canvasImage = new Image();
+		this.canvasImage.src = this.image;
+		this.canvasImage.onload = function() {
+			PewPew.canvas.context.drawImage(self.canvasImage, self.x, self.y);
+		};
+
 		PewPew.game.enemies[game.enemies.length] = this;
 	}
 
@@ -139,9 +152,11 @@ var PewPew = {};
 				touchId = event.changedTouches[i].identifier;
 				x = event.changedTouches[i].pageX;
 				y = event.changedTouches[i].pageY;
-				for (var enemy in enemies) {
-					//test if the enemy is hit
-					if(x>=enemy.x && x<=enemy.x+enemy.image.width && y>=enemy.y&&y<=enemy.y+enemy.image.height){
+				for ( var enemy in enemies) {
+					// test if the enemy is hit
+					if (x >= enemy.x && x <= enemy.x + enemy.image.width
+							&& y >= enemy.y
+							&& y <= enemy.y + enemy.image.height) {
 						enemy.receiveDamage(PewPew.player.damage());
 					}
 				}
