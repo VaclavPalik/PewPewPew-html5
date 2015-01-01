@@ -125,12 +125,7 @@ var PewPew = {};
 				PewPew.game.enemies.splice(index, 1);
 			}
 			// redraw the scene
-			PewPew.canvas.context.clearRect(0, 0, PewPew.canvas.width,
-					PewPew.canvas.height);
-			for ( var enemy in PewPew.game.enemies) {
-				PewPew.canvas.context.drawImage(enemy.canvasImage, enemy.x,
-						enemy.y);
-			}
+			PewPew.canvas.redraw();
 		};
 		this.canvasImage = new Image();
 		this.canvasImage.src = this.image;
@@ -174,6 +169,14 @@ var PewPew = {};
 	PewPew.canvas = {
 		element : document.getElementById("canvas"),
 		context : PewPew.canvas.element.getContext("2d"),
+		redraw : function(){
+			PewPew.canvas.context.clearRect(0, 0, PewPew.canvas.width,
+					PewPew.canvas.height);
+			for ( var enemy in PewPew.game.enemies) {
+				PewPew.canvas.context.drawImage(enemy.canvasImage, enemy.x,
+						enemy.y);
+				}
+			},
 	};
 	PewPew.canvas.element.addEventListener("touch", PewPew.game.handleHit
 			.bind(PewPew.game));
