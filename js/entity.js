@@ -100,16 +100,23 @@ var PewPew = {};
 		this.y = y;
 		this.setX = function(x) {
 			self.x = x;
+			PewPew.canvas.redraw();
 		};
 		this.setY = function(y) {
 			self.y = y;
+			PewPew.canvas.redraw();
+		};
+		this.setXY = function(x, y) {
+			self.x = x;
+			self.y = y;
+			PewPew.canvas.redraw();
 		};
 		this.image = image;
 		this.value = value;
 		/**
 		 * deals damage to the enemy
 		 */
-		this.recieveDamage = function(damage) {
+		this.receiveDamage = function(damage) {
 			self.hp -= damage;
 			if (self.hp <= 0) {
 				self.onDestroy();
@@ -129,15 +136,18 @@ var PewPew = {};
 		};
 		this.canvasImage = new Image();
 		this.canvasImage.src = this.image;
+		this.width=self.canvasImage.width;
+		this.height=self.canvasImage.height;
 		this.canvasImage.onload = function() {
 			PewPew.canvas.context.drawImage(self.canvasImage, self.x, self.y);
+			self.width = self.canvasImage.width;
+			self.height = self.canvasImage.height;
 		};
-		this.width=this.canvasImage.width;
-		this.height=this.canvasImage.height;
-		PewPew.game.enemies[game.enemies.length] = this;
+
+		PewPew.game.enemies[PewPew.game.enemies.length] = self;
 	}
-	
-	function Fighter(x, y){
+
+	function Fighter(x, y) {
 		Enemy.call(this, 1, x, y, "img/fighter.png", 1);
 	}
 	Fighter.prototype = Object.create(Enemy.prototype);
@@ -151,33 +161,44 @@ var PewPew = {};
 			var touchId, x, y;
 			for (var i = 0; i < event.changedTouches.length; i++) {
 				touchId = event.changedTouches[i].identifier;
-				x = event.changedTouches[i].pageX;
-				y = event.changedTouches[i].pageY;
-				for ( var enemy in enemies) {
+				x = event.changedTouches[i].clientX-PewPew.canvas.element.getBoundingClientRect().left;
+				y = event.changedTouches[i].clientY-PewPew.canvas.element.getBoundingClientRect().top;
+				for ( var enemy in PewPew.game.enemies) {
+					enemy = PewPew.game.enemies[enemy];
 					// test if the enemy is hit
 					if (x >= enemy.x && x <= enemy.x + enemy.width
-							&& y >= enemy.y
-							&& y <= enemy.y + enemy.height) {
+							&& y >= enemy.y && y <= enemy.y + enemy.height) {
 						enemy.receiveDamage(PewPew.player.damage());
 					}
 				}
 			}
 
+		},
+		spawnEnemy : function(enemy) {
+			var x = Math.floor(Math.random() * (PewPew.canvas.element.width-enemy.width));
+			var y = Math.floor(Math.random() * (PewPew.canvas.element.height-enemy.height));
+			enemy.setXY(x, y);
 		}
+
 	};
 
 	PewPew.canvas = {
 		element : document.getElementById("canvas"),
-		context : PewPew.canvas.element.getContext("2d"),
-		redraw : function(){
-			PewPew.canvas.context.clearRect(0, 0, PewPew.canvas.width,
-					PewPew.canvas.height);
+		context : null,
+		redraw : function() {
+			this.context.clearRect(0, 0, PewPew.canvas.element.width,
+					PewPew.canvas.element.height);
 			for ( var enemy in PewPew.game.enemies) {
+				enemy = PewPew.game.enemies[enemy];
 				PewPew.canvas.context.drawImage(enemy.canvasImage, enemy.x,
 						enemy.y);
-				}
-			},
+			}
+		},
 	};
-	PewPew.canvas.element.addEventListener("touch", PewPew.game.handleHit
+	PewPew.canvas.context = PewPew.canvas.element.getContext("2d");
+	PewPew.canvas.element.addEventListener("touchstart", PewPew.game.handleHit
 			.bind(PewPew.game));
+	window.setInterval(function() {
+		PewPew.game.spawnEnemy(new Fighter(0, 0));
+	}, 3000);
 }();
