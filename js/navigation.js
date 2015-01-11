@@ -62,5 +62,6 @@
 	};
 
 	$(window).resize(resizeFunction);
+	window.addEventListener("deviceorientation", resizeFunction)
 	resizeFunction();
 }();
