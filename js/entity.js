@@ -225,8 +225,8 @@ var PewPew = {};
 			var touchId, x, y;
 			for (var i = 0; i < evt.changedTouches.length; i++) {
 				touchId = evt.changedTouches[i].identifier;
-				x = event.changedTouches[i].clientX-PewPew.canvas.element.getBoundingClientRect().left;
-				y = event.changedTouches[i].clientY-PewPew.canvas.element.getBoundingClientRect().top;
+				x = evt.changedTouches[i].clientX-PewPew.canvas.element.getBoundingClientRect().left;
+				y = evt.changedTouches[i].clientY-PewPew.canvas.element.getBoundingClientRect().top;
 				for ( var enemy in PewPew.game.enemies) {
 					enemy = PewPew.game.enemies[enemy];
 					// test if the enemy is hit
