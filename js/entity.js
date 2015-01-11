@@ -223,8 +223,8 @@ var PewPew = {};
 			evt.preventDefault();
 			var touches = evt.changedTouches;
 			var touchId, x, y;
-			for (var i = 0; i < event.changedTouches.length; i++) {
-				touchId = event.changedTouches[i].identifier;
+			for (var i = 0; i < evt.changedTouches.length; i++) {
+				touchId = evt.changedTouches[i].identifier;
 				x = event.changedTouches[i].clientX-PewPew.canvas.element.getBoundingClientRect().left;
 				y = event.changedTouches[i].clientY-PewPew.canvas.element.getBoundingClientRect().top;
 				for ( var enemy in PewPew.game.enemies) {
