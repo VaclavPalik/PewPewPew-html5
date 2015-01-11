@@ -7,12 +7,14 @@ var PewPew = {};
 	/**
 	 * Upgrade class
 	 */
-	function Upgrade(name, maxLevel, baseCost) {
+	function Upgrade(name, maxLevel, baseCost, image, descr) {
 		var self = this;
 		this.name = name;
+		this.descr = descr;
 		this.maxLevel = maxLevel;
 		this.level = 0;
 		this.baseCost = baseCost;
+		this.image=image;
 		/**
 		 * The current upgrade's cost
 		 */
@@ -37,8 +39,9 @@ var PewPew = {};
 		 * generates this upgrade's HTML for upgrade tab
 		 */
 		this.getHtml = function getHtml() {
-			return '<div id="' + self.getElementId() + '" class="tile">'
-					+ self.name + "<br>" + 'Level: <span id="'
+			return '<div id="' + self.getElementId() + '" class="tile" style="background-image: url('+self.image+');'+
+		    'background-repeat: no-repeat; background-position: center center;">'
+					+ self.descr + "<br>" + 'Level: <span id="'
 					+ self.getElementId() + '-level">0</span><br>'
 					+ 'Cost: <span id="' + self.getElementId() + '-cost">'
 					+ self.cost() + "</span>" + "</div>";
@@ -65,9 +68,9 @@ var PewPew = {};
 	PewPew.player = {
 		money : 0,
 		upgrades : {
-			damage : new Upgrade("+1 Damage", 10, 50),
-			income : new Upgrade("+1 Money per kill", 10, 100),
-			range: new Upgrade("+1 Hit Area", 15, 50)
+			damage : new Upgrade("damage", 10, 50, "img/pistol.png", "+1 Damage"),
+			income : new Upgrade("income", 10, 100, "img/dollar.png", "+1 Money per kill"),
+			range: new Upgrade("range", 15, 50, "img/range.png", "+1 Hit Area")
 		},
 		/**
 		 * The player's current income bonus
