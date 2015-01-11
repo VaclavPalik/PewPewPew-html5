@@ -12,25 +12,25 @@ var PewPew = {};
 		this.name = name;
 		this.maxLevel = maxLevel;
 		this.level = 0;
-		this.cost = function() {
+		this.cost = function cost() {
 			return (self.level + 1) * 100;
 		};
-		this.getElementId = function() {
+		this.getElementId = function getElementId() {
 			return "upgrade-" + self.name;
 		};
-		this.onBuy = function() {
+		this.onBuy = function onBuy() {
 			document.getElementById(self.getElementId() + "-cost").innerHTML = self
 					.cost();
 			document.getElementById(self.getElementId() + "-level").innerHTML = self.level;
 		};
-		this.getHtml = function() {
+		this.getHtml = function getHtml() {
 			return '<div id="' + self.getElementId() + '" class="tile">'
 					+ self.name + "<br>" + 'Level: <span id="'
 					+ self.getElementId() + '-level">0</span><br>'
 					+ 'Cost: <span id="' + self.getElementId() + '-cost">'
 					+ self.cost() + "</span>" + "</div>";
 		};
-		this.tryBuy = function() {
+		this.tryBuy = function tryBuy() {
 			if (self.level >= self.maxLevel) {
 				return false;
 			}
@@ -52,20 +52,20 @@ var PewPew = {};
 			damage : new Upgrade("damage", 10),
 			income : new Upgrade("income", 10)
 		},
-		income : function() {
+		income : function income() {
 			return this.upgrades.income.level + 1;
 		},
-		damage : function() {
+		damage : function damage() {
 			return this.upgrades.damage.level + 1;
 		},
-		changeMoney : function(newMoney) {
+		changeMoney : function changeMoney(newMoney) {
 			this.money = newMoney;
 			document.getElementById("money").innerHTML = this.money;
 		},
-		addMoney : function(money) {
+		addMoney : function addMoney(money) {
 			return this.changeMoney(this.money + money);
 		},
-		substractMoney : function(money) {
+		substractMoney : function substractMoney(money) {
 			return this.addMoney(-money);
 		}
 	};
@@ -98,15 +98,15 @@ var PewPew = {};
 		this.hp = hp;
 		this.x = x;
 		this.y = y;
-		this.setX = function(x) {
+		this.setX = function setX(x) {
 			self.x = x;
 			PewPew.canvas.redraw();
 		};
-		this.setY = function(y) {
+		this.setY = function setY(y) {
 			self.y = y;
 			PewPew.canvas.redraw();
 		};
-		this.setXY = function(x, y) {
+		this.setXY = function setXY(x, y) {
 			self.x = x;
 			self.y = y;
 			PewPew.canvas.redraw();
@@ -116,7 +116,7 @@ var PewPew = {};
 		/**
 		 * deals damage to the enemy
 		 */
-		this.receiveDamage = function(damage) {
+		this.receiveDamage = function receiveDamage(damage) {
 			self.hp -= damage;
 			if (self.hp <= 0) {
 				self.onDestroy();
@@ -125,7 +125,7 @@ var PewPew = {};
 		/**
 		 * called when an enemy is destroyed
 		 */
-		this.onDestroy = function() {
+		this.onDestroy = function onDestroy() {
 			PewPew.player.addMoney(self.value * PewPew.player.income());
 			var index = PewPew.game.enemies.indexOf(self);
 			if (index > -1) {
@@ -155,7 +155,7 @@ var PewPew = {};
 	PewPew.game = {
 		level : 1,
 		enemies : [],
-		handleHit : function(evt) {
+		handleHit : function handleHit(evt) {
 			evt.preventDefault();
 			var touches = event.changedTouches;
 			var touchId, x, y;
@@ -174,7 +174,7 @@ var PewPew = {};
 			}
 
 		},
-		spawnEnemy : function(enemy) {
+		spawnEnemy : function spawnEnemy(enemy) {
 			var x = Math.floor(Math.random() * (PewPew.canvas.element.width-enemy.width));
 			var y = Math.floor(Math.random() * (PewPew.canvas.element.height-enemy.height));
 			enemy.setXY(x, y);
@@ -185,7 +185,7 @@ var PewPew = {};
 	PewPew.canvas = {
 		element : document.getElementById("canvas"),
 		context : null,
-		redraw : function() {
+		redraw : function redraw() {
 			this.context.clearRect(0, 0, PewPew.canvas.element.width,
 					PewPew.canvas.element.height);
 			for ( var enemy in PewPew.game.enemies) {
