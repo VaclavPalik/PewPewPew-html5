@@ -55,7 +55,7 @@
 	
 	var resizeFunction = function resizeFunction(){
 		document.getElementById("canvas").width=$(window).width()-30;	
-		document.getElementById("canvas").height=$(window).height()-document.getElementById("nav").height-5;
+		document.getElementById("canvas").height=$(window).height()-$('#nav').height()-5;
 	};
 	
 	$(window).resize(resizeFunction);
