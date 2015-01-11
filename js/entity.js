@@ -17,7 +17,7 @@ var PewPew = {};
 		 * The current upgrade's cost
 		 */
 		this.cost = function cost() {
-			return (self.level + 1) * baseCost;
+			return Math.pow(self.level + 1, 2) * baseCost;
 		};
 		/**
 		 * The upgrade's element id, used to change info on upgrade tab
