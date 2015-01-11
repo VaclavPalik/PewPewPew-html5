@@ -52,4 +52,12 @@
 	navGame.addEventListener("click", showGame);
 	navUpgrade.addEventListener("click", showUpgrades);
 	navAbout.addEventListener("click", showAbout);
+	
+	var resizeFunction = function resizeFunction(){
+		document.getElementById("canvas").width=$(window).width();
+		document.getElementById("canvas").height=$(window).height()-50;
+	};
+	
+	$(window).resize(resizeFunction);
+	resizeFunction();
 }();
