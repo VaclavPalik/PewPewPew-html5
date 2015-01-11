@@ -61,7 +61,7 @@
 		document.getElementById("canvas").height = $(window).height() - $('#nav').height() - 5;
 	};
 
-	$(window).resize(resizeFunction);
-	window.addEventListener("deviceorientation", resizeFunction)
+	$(window).resize(function () {window.setTimeout(resizeFunction, 500);});
+	window.addEventListener("deviceorientation", function () {window.setTimeout(resizeFunction, 500);});
 	resizeFunction();
 }();
