@@ -1,8 +1,17 @@
 body {
-  padding-top: 50px;
+  padding-top: 52px;
 }
 .starter-template {
-  padding: 40px 15px;
+/*  padding: 40px 15px;*/
   text-align: center;
 }
 .invisible {display: none;}
+.container {
+    width: 100% !important;
+}
+#upgrades{
+	padding: 15px;
+}
+.tile {
+	margin: 6px !important;
+}

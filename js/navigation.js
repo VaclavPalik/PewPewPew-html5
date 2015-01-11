@@ -54,8 +54,8 @@
 	navAbout.addEventListener("click", showAbout);
 	
 	var resizeFunction = function resizeFunction(){
-		document.getElementById("canvas").width=$(window).width();
-		document.getElementById("canvas").height=$(window).height()-50;
+		document.getElementById("canvas").width=$(window).width()-30;
+		document.getElementById("canvas").height=$(window).height()-55;
 	};
 	
 	$(window).resize(resizeFunction);
