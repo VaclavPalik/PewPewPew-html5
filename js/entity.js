@@ -67,6 +67,13 @@ var PewPew = {};
 		},
 		substractMoney : function substractMoney(money) {
 			return this.addMoney(-money);
+		},
+		score : 0,
+		addScore : function addScore(toAdd){
+			this.score+=toAdd;
+			//check the advance to the next level
+			if(PewPew.game.levels[PewPew.game.level]<=this.score)
+				PewPew.game.level++;
 		}
 	};
 	/**
@@ -126,7 +133,8 @@ var PewPew = {};
 		 * called when an enemy is destroyed
 		 */
 		this.onDestroy = function onDestroy() {
-			PewPew.player.addMoney(self.value * PewPew.player.income());
+			PewPew.player.addMoney(self.value + PewPew.player.income());
+			PewPew.player.addScore(self.value)
 			var index = PewPew.game.enemies.indexOf(self);
 			if (index > -1) {
 				PewPew.game.enemies.splice(index, 1);
@@ -159,6 +167,7 @@ var PewPew = {};
 	
 	PewPew.game = {
 		level : 1,
+		levels : [0,50,200,500,2500,10000,50000,200000,1000000],
 		enemies : [],
 		handleHit : function handleHit(evt) {
 			evt.preventDefault();
