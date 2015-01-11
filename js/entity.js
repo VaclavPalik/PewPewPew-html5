@@ -65,7 +65,8 @@ var PewPew = {};
 		money : 0,
 		upgrades : {
 			damage : new Upgrade("damage", 10),
-			income : new Upgrade("income", 10)
+			income : new Upgrade("income", 10),
+			range: new Upgrade("Hit Area", 15)
 		},
 		/**
 		 * The player's current income bonus
