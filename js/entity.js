@@ -47,7 +47,7 @@ var PewPew = {};
 	 * player singleton
 	 */
 	PewPew.player = {
-		money : 50000,
+		money : 0,
 		upgrades : {
 			damage : new Upgrade("damage", 10),
 			income : new Upgrade("income", 10)
