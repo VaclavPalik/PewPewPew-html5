@@ -152,6 +152,11 @@ var PewPew = {};
 	}
 	Fighter.prototype = Object.create(Enemy.prototype);
 
+	function Mook(x, y) {
+		Enemy.call(this, 2, x, y, "img/mook.png", 2);
+	}
+	Mook.prototype = Object.create(Enemy.prototype);
+	
 	PewPew.game = {
 		level : 1,
 		enemies : [],
@@ -199,6 +204,21 @@ var PewPew = {};
 	PewPew.canvas.element.addEventListener("touchstart", PewPew.game.handleHit
 			.bind(PewPew.game));
 	window.setInterval(function() {
-		PewPew.game.spawnEnemy(new Fighter(0, 0));
-	}, 3000);
+		switch(PewPew.game.level){
+		case 1:
+			if(Math.random()<=0.33){
+				PewPew.game.spawnEnemy(new Fighter(0, 0));
+			}	
+			break;
+		case 2:
+			if(Math.random()<=0.33){
+				if(Math.random()<=0.33){
+					PewPew.game.spawnEnemy(new Mook(0, 0));
+				}else{
+					PewPew.game.spawnEnemy(new Fighter(0, 0));
+				}
+			}
+		}
+			
+	}, 1000);
 }();
