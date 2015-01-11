@@ -7,16 +7,17 @@ var PewPew = {};
 	/**
 	 * Upgrade class
 	 */
-	function Upgrade(name, maxLevel) {
+	function Upgrade(name, maxLevel, baseCost) {
 		var self = this;
 		this.name = name;
 		this.maxLevel = maxLevel;
 		this.level = 0;
+		this.baseCost = baseCost;
 		/**
 		 * The current upgrade's cost
 		 */
 		this.cost = function cost() {
-			return (self.level + 1) * 100;
+			return (self.level + 1) * baseCost;
 		};
 		/**
 		 * The upgrade's element id, used to change info on upgrade tab
@@ -64,8 +65,9 @@ var PewPew = {};
 	PewPew.player = {
 		money : 0,
 		upgrades : {
-			damage : new Upgrade("damage", 10),
-			income : new Upgrade("income", 10)
+			damage : new Upgrade("+1 Damage", 10, 50),
+			income : new Upgrade("+1 Money per kill", 10, 100),
+			range: new Upgrade("+1 Hit Area", 15, 50)
 		},
 		/**
 		 * The player's current income bonus
@@ -182,6 +184,56 @@ var PewPew = {};
 			// redraw the scene
 			PewPew.canvas.redraw();
 		};
+		/**
+		 * Checks if the enemy is hit by touching at given coords
+		 */
+		this.checkHit = function checkHit(x, y){
+			if(x>=self.x){
+				if(x<=self.x+self.width){
+					//x in this
+					if(y>=self.y){
+						if(y<=self.y+self.height){
+							//y in this
+							return true;
+						}else{
+							//y below this
+							return y-(self.y+self.height)<=PewPew.player.upgrades.range.level;
+						}
+					}else{
+						//y above this
+						return self.y-y<=PewPew.player.upgrades.range.level;
+					}
+				}else{
+					//x right of this
+					if(y>=self.y){
+						if(y<=self.y+self.height){
+							//y in this
+							return x-(self.x+self.width)<=PewPew.player.upgrades.range.level;
+						}else{
+							//y below this
+							return Math.pow(x-(self.x+self.width), 2)+Math.pow(y-(self.y+self.height),2)<=Math.pow(PewPew.player.upgrades.range.level, 2);							
+						}
+					}else{
+						//y above this
+						return Math.pow(x-(self.x+self.width), 2)+Math.pow(self.y-y,2)<=Math.pow(PewPew.player.upgrades.range.level, 2);
+					}
+				}
+			}else{
+				//x left of this
+				if(y>=self.y){
+					if(y<=self.y+self.height){
+						//y in this
+						return self.x-x<=PewPew.player.upgrades.range.level;
+					}else{
+						//y below this
+						return Math.pow(self.x-x, 2)+Math.pow(y-(self.y+self.height),2)<=Math.pow(PewPew.player.upgrades.range.level, 2);
+					}
+				}else{
+					//y above this
+					return Math.pow(self.x-x, 2)+Math.pow(self.y-y,2)<=Math.pow(PewPew.player.upgrades.range.level, 2);
+				}
+			}
+		};
 		this.canvasImage = new Image();
 		this.canvasImage.src = this.image;
 		this.width=self.canvasImage.width;
@@ -230,8 +282,7 @@ var PewPew = {};
 				for ( var enemy in PewPew.game.enemies) {
 					enemy = PewPew.game.enemies[enemy];
 					// test if the enemy is hit
-					if (x >= enemy.x && x <= enemy.x + enemy.width
-							&& y >= enemy.y && y <= enemy.y + enemy.height) {
+					if (enemy.checkHit(x,y)) {
 						enemy.receiveDamage(PewPew.player.damage());
 					}
 				}
