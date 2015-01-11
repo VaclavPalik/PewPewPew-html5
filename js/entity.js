@@ -65,9 +65,9 @@ var PewPew = {};
 	PewPew.player = {
 		money : 0,
 		upgrades : {
-			damage : new Upgrade("damage", 10, 50),
-			income : new Upgrade("income", 10, 100),
-			range: new Upgrade("Hit Area", 15, 50)
+			damage : new Upgrade("+1 Damage", 10, 50),
+			income : new Upgrade("+1 Money per kill", 10, 100),
+			range: new Upgrade("+1 Hit Area", 15, 50)
 		},
 		/**
 		 * The player's current income bonus
