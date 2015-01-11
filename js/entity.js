@@ -7,16 +7,17 @@ var PewPew = {};
 	/**
 	 * Upgrade class
 	 */
-	function Upgrade(name, maxLevel) {
+	function Upgrade(name, maxLevel, baseCost) {
 		var self = this;
 		this.name = name;
 		this.maxLevel = maxLevel;
 		this.level = 0;
+		this.baseCost = baseCost;
 		/**
 		 * The current upgrade's cost
 		 */
 		this.cost = function cost() {
-			return (self.level + 1) * 100;
+			return (self.level + 1) * baseCost;
 		};
 		/**
 		 * The upgrade's element id, used to change info on upgrade tab
@@ -64,9 +65,9 @@ var PewPew = {};
 	PewPew.player = {
 		money : 0,
 		upgrades : {
-			damage : new Upgrade("damage", 10),
-			income : new Upgrade("income", 10),
-			range: new Upgrade("Hit Area", 15)
+			damage : new Upgrade("damage", 10, 50),
+			income : new Upgrade("income", 10, 100),
+			range: new Upgrade("Hit Area", 15, 50)
 		},
 		/**
 		 * The player's current income bonus
