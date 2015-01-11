@@ -207,7 +207,7 @@ var PewPew = {};
 	Mook.prototype = Object.create(Enemy.prototype);
 	
 	function Bomber(x, y) {
-		Enemy.call(this, 2, x, y, "img/bomber.png", 2);
+		Enemy.call(this, 5, x, y, "img/bomber.png", 5);
 	}
 	Bomber.prototype = Object.create(Enemy.prototype);
 	
@@ -298,7 +298,16 @@ var PewPew = {};
 				}
 			}
 			break;
+		
+		case 4:
+			if(Math.random()<=0.1){
+				PewPew.game.spawnEnemy(new Bomber(0, 0));
+				PewPew.game.spawnEnemy(new Fighter(0, 0));
+			}else if(Math.random()<=0.66){
+				PewPew.game.spawnEnemy(new Mook(0, 0));
+			}else{
+				PewPew.game.spawnEnemy(new Fighter(0, 0));
+			}
 		}
-			
 	}, 1000);
 }();
