@@ -221,7 +221,7 @@ var PewPew = {};
 		 */
 		handleHit : function handleHit(evt) {
 			evt.preventDefault();
-			var touches = event.changedTouches;
+			var touches = evt.changedTouches;
 			var touchId, x, y;
 			for (var i = 0; i < event.changedTouches.length; i++) {
 				touchId = event.changedTouches[i].identifier;
