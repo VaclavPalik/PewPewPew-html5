@@ -188,7 +188,7 @@ var PewPew = {};
 		 * Checks if the enemy is hit by touching at given coords
 		 */
 		this.checkHit = function checkHit(x, y){
-			return x >= enemy.x && x <= enemy.x + enemy.width && y >= enemy.y && y <= enemy.y + enemy.height;
+			return x >= self.x && x <= self.x + self.width && y >= self.y && y <= self.y + self.height;
 		};
 		this.canvasImage = new Image();
 		this.canvasImage.src = this.image;
