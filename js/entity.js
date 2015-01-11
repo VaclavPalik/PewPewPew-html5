@@ -12,17 +12,29 @@ var PewPew = {};
 		this.name = name;
 		this.maxLevel = maxLevel;
 		this.level = 0;
+		/**
+		 * The current upgrade's cost
+		 */
 		this.cost = function cost() {
 			return (self.level + 1) * 100;
 		};
+		/**
+		 * The upgrade's element id, used to change info on upgrade tab
+		 */
 		this.getElementId = function getElementId() {
 			return "upgrade-" + self.name;
 		};
+		/**
+		 * Fired when this upgrade is bought
+		 */
 		this.onBuy = function onBuy() {
 			document.getElementById(self.getElementId() + "-cost").innerHTML = self
 					.cost();
 			document.getElementById(self.getElementId() + "-level").innerHTML = self.level;
 		};
+		/**
+		 * generates this upgrade's HTML for upgrade tab
+		 */
 		this.getHtml = function getHtml() {
 			return '<div id="' + self.getElementId() + '" class="tile">'
 					+ self.name + "<br>" + 'Level: <span id="'
@@ -30,6 +42,9 @@ var PewPew = {};
 					+ 'Cost: <span id="' + self.getElementId() + '-cost">'
 					+ self.cost() + "</span>" + "</div>";
 		};
+		/**
+		 * Tries to buy this upgrade, buys the upgrade for player if he has enough money
+		 */
 		this.tryBuy = function tryBuy() {
 			if (self.level >= self.maxLevel) {
 				return false;
@@ -52,23 +67,47 @@ var PewPew = {};
 			damage : new Upgrade("damage", 10),
 			income : new Upgrade("income", 10)
 		},
+		/**
+		 * The player's current income bonus
+		 * @returns {Number}
+		 */
 		income : function income() {
-			return this.upgrades.income.level + 1;
+			return this.upgrades.income.level;
 		},
+		/**
+		 * The player's current damage from hit
+		 * @returns {Number}
+		 */
 		damage : function damage() {
 			return this.upgrades.damage.level + 1;
 		},
+		/**
+		 * changes the player's money
+		 * @param newMoney the new amount to set
+		 */
 		changeMoney : function changeMoney(newMoney) {
 			this.money = newMoney;
 			document.getElementById("money").innerHTML = this.money;
 		},
+		/**
+		 * Adds money to player
+		 * @param money the amount to be given
+		 */
 		addMoney : function addMoney(money) {
-			return this.changeMoney(this.money + money);
+			this.changeMoney(this.money + money);
 		},
+		/**
+		 * Removes money from player
+		 * @param money the amount to be removed
+		 */
 		substractMoney : function substractMoney(money) {
-			return this.addMoney(-money);
+			this.addMoney(-money);
 		},
 		score : 0,
+		/**
+		 * Adds score to player
+		 * @param toAdd the amount
+		 */
 		addScore : function addScore(toAdd){
 			this.score+=toAdd;
 			//check the advance to the next level
@@ -122,6 +161,7 @@ var PewPew = {};
 		this.value = value;
 		/**
 		 * deals damage to the enemy
+		 * @param damage
 		 */
 		this.receiveDamage = function receiveDamage(damage) {
 			self.hp -= damage;
@@ -130,11 +170,11 @@ var PewPew = {};
 			}
 		};
 		/**
-		 * called when an enemy is destroyed
+		 * called when an enemy is destroyed, adds score and money to player and removes the enemy from game
 		 */
 		this.onDestroy = function onDestroy() {
 			PewPew.player.addMoney(self.value + PewPew.player.income());
-			PewPew.player.addScore(self.value)
+			PewPew.player.addScore(self.value);
 			var index = PewPew.game.enemies.indexOf(self);
 			if (index > -1) {
 				PewPew.game.enemies.splice(index, 1);
@@ -155,6 +195,7 @@ var PewPew = {};
 		PewPew.game.enemies[PewPew.game.enemies.length] = self;
 	}
 
+	//The enemy templates
 	function Fighter(x, y) {
 		Enemy.call(this, 1, x, y, "img/fighter.png", 1);
 	}
@@ -169,6 +210,10 @@ var PewPew = {};
 		level : 1,
 		levels : [0,50,200,500,2500,10000,50000,200000,1000000],
 		enemies : [],
+		/**
+		 * handles the hitting the enemies
+		 * @param evt the touch event into game area
+		 */
 		handleHit : function handleHit(evt) {
 			evt.preventDefault();
 			var touches = event.changedTouches;
@@ -188,6 +233,10 @@ var PewPew = {};
 			}
 
 		},
+		/**
+		 * Spawns an enemy into game and moves him into random place ingame
+		 * @param enemy
+		 */
 		spawnEnemy : function spawnEnemy(enemy) {
 			var x = Math.floor(Math.random() * (PewPew.canvas.element.width-enemy.width));
 			var y = Math.floor(Math.random() * (PewPew.canvas.element.height-enemy.height));
@@ -195,10 +244,15 @@ var PewPew = {};
 		}
 
 	};
-
+	/**
+	 * The game canvas holder where the enemies are spawned
+	 */
 	PewPew.canvas = {
 		element : document.getElementById("canvas"),
 		context : null,
+		/**
+		 * redraws all the enemies alive in game
+		 */
 		redraw : function redraw() {
 			this.context.clearRect(0, 0, PewPew.canvas.element.width,
 					PewPew.canvas.element.height);
@@ -212,6 +266,8 @@ var PewPew = {};
 	PewPew.canvas.context = PewPew.canvas.element.getContext("2d");
 	PewPew.canvas.element.addEventListener("touchstart", PewPew.game.handleHit
 			.bind(PewPew.game));
+	
+	//The enemy spawning loop
 	window.setInterval(function() {
 		switch(PewPew.game.level){
 		case 1:
