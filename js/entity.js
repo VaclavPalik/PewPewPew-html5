@@ -184,6 +184,12 @@ var PewPew = {};
 			// redraw the scene
 			PewPew.canvas.redraw();
 		};
+		/**
+		 * Checks if the enemy is hit by touching at given coords
+		 */
+		this.checkHit = function checkHit(x, y){
+			return x >= enemy.x && x <= enemy.x + enemy.width && y >= enemy.y && y <= enemy.y + enemy.height;
+		};
 		this.canvasImage = new Image();
 		this.canvasImage.src = this.image;
 		this.width=self.canvasImage.width;
@@ -232,8 +238,7 @@ var PewPew = {};
 				for ( var enemy in PewPew.game.enemies) {
 					enemy = PewPew.game.enemies[enemy];
 					// test if the enemy is hit
-					if (x >= enemy.x && x <= enemy.x + enemy.width
-							&& y >= enemy.y && y <= enemy.y + enemy.height) {
+					if (enemy.checkHit(x,y)) {
 						enemy.receiveDamage(PewPew.player.damage());
 					}
 				}
