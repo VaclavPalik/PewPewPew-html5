@@ -206,6 +206,11 @@ var PewPew = {};
 	}
 	Mook.prototype = Object.create(Enemy.prototype);
 	
+	function Bomber(x, y) {
+		Enemy.call(this, 2, x, y, "img/bomber.png", 2);
+	}
+	Bomber.prototype = Object.create(Enemy.prototype);
+	
 	PewPew.game = {
 		level : 1,
 		levels : [0,50,200,500,2500,10000,50000,200000,1000000],
