@@ -300,6 +300,7 @@ var PewPew = {};
 			break;
 		
 		case 4:
+		default:
 			if(Math.random()<=0.1){
 				PewPew.game.spawnEnemy(new Bomber(0, 0));
 				PewPew.game.spawnEnemy(new Fighter(0, 0));
@@ -308,6 +309,7 @@ var PewPew = {};
 			}else{
 				PewPew.game.spawnEnemy(new Fighter(0, 0));
 			}
+			break;
 		}
 	}, 1000);
 }();
