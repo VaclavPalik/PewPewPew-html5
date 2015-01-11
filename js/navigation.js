@@ -52,12 +52,15 @@
 	navGame.addEventListener("click", showGame);
 	navUpgrade.addEventListener("click", showUpgrades);
 	navAbout.addEventListener("click", showAbout);
-	
-	var resizeFunction = function resizeFunction(){
-		document.getElementById("canvas").width=$(window).width()-30;	
-		document.getElementById("canvas").height=$(window).height()-$('#nav').height()-5;
+
+	var resizeFunction = function resizeFunction() {
+		$(document.body).animate({
+			paddingTop : $(window).height() + 2 + 'px'
+		});
+		document.getElementById("canvas").width = $(window).width() - 30;
+		document.getElementById("canvas").height = $(window).height() - $('#nav').height() - 5;
 	};
-	
+
 	$(window).resize(resizeFunction);
 	resizeFunction();
 }();
