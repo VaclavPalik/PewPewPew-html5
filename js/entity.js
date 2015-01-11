@@ -283,6 +283,16 @@ var PewPew = {};
 					PewPew.game.spawnEnemy(new Fighter(0, 0));
 				}
 			}
+			break;
+		case 3:
+			if(Math.random()<=0.66){
+				if(Math.random()<=0.66){
+					PewPew.game.spawnEnemy(new Mook(0, 0));
+				}else{
+					PewPew.game.spawnEnemy(new Fighter(0, 0));
+				}
+			}
+			break;
 		}
 			
 	}, 1000);
